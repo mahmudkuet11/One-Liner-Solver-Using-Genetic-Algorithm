@@ -1,0 +1,21 @@
+{
+  "name": "one-liner-solver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx mix",
+    "watch": "npx mix watch",
+    "prod": "npx mix --production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "geneticalgorithm": "^1.0.2"
+  },
+  "devDependencies": {
+    "laravel-mix": "^6.0.49"
+  }
+}
