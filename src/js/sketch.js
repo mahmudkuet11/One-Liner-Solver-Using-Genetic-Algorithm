@@ -2,12 +2,15 @@ let addNodeButton;
 let addEdgeButton;
 let resetAllButton;
 let solveButton;
+let undoButton;
 const buttonSeparatorY = 70;
 let mode = 'node';
 let nodes = [];
 let edges = [];
 let currentEdge;
 let solutionPath = 'Solution path will be shown here';
+
+let history = [];
 
 let canvasDimensions = {
     width: 350,
@@ -73,11 +76,24 @@ function addButtons() {
     resetAllButton.mousePressed(() => {
         nodes = [];
         edges = [];
+        history = [];
         solutionPath = 'Solution path will be shown here';
     });
 
+    undoButton = createButton('Undo');
+    undoButton.position(10, 40);
+    undoButton.mousePressed(() => {
+        const lastAction = history.pop();
+        if (lastAction.type === 'edge') {
+            edges.pop();
+        }
+        if (lastAction.type === 'node') {
+            nodes.pop();
+        }
+    });
+
     solveButton = createButton('Solve');
-    solveButton.position(10, 40);
+    solveButton.position(90, 40);
     solveButton.mousePressed(() => {
         const edgesMap = getEdgesMap(edges);
         const solution = window.OneLinerSolver.solve(edgesMap);
@@ -135,6 +151,9 @@ function mouseClicked() {
 
 function addNode() {
     nodes.push({x: mouseX, y: mouseY, label: nodes.length + 1});
+    history.push({
+        type: 'node',
+    });
 }
 
 function addEdge() {
@@ -167,6 +186,9 @@ function pushUniqueEdge(newEdge) {
         return null;
     }
     edges.push(newEdge);
+    history.push({
+        type: 'edge',
+    });
 }
 
 function getHashOfEdge(edge) {
